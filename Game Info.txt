@@ -1,0 +1,41 @@
+Krigenheim
+
+STATS
+
+Strength : Physical tasks, raw attack power
+Agility : Dodge, critical chance, and movement tasks
+Fortitude : Maximum health, resistance to disease and debilitating physical effects
+Intelligence : Maximum skills, skill caps
+Wisdom : Maximum mana, resistance to curses and debilitating mental effects
+Charisma : Initial and maximum disposition, persuasion and deception, type of orders issuable
+
+Classes (20/20)
+
+Adventurer
+Aristocrat
+Artificer
+Charlatan
+Cleric
+Druid
+Engineer
+Fighter
+Freelancer
+Knight
+Lord
+Marine
+Merchant
+Philosopher
+Ranger
+Rogue
+Shaman
+Sorcerer
+Summoner
+Wizard
+
+Special Classes
+Death Knight
+Demon Hunter
+Elementalist
+Holy Knight
+King
+Warlock
