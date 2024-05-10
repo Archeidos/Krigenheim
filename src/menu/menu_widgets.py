@@ -31,9 +31,9 @@ class ImageDisplay(GameObject):
 # Object to be used as a button. image_path is the button background.
 # You can specify a text parameter, and a callback (you can pass a function to be executed when clicked)
 class ImageButton(GameObject):
-    def __init__(self, image_path, position=(0, 0), text="", callback=None, font_type=None, font_size=24, size=None):
+    def __init__(self, image_path, position=(0, 0), text="", callback=None, font_type="Helvetica", font_size=18, size=None):
         original_image = pygame.image.load(image_path)
-        self.font = pygame.font.Font(font_type, font_size)
+        self.font = pygame.font.SysFont(font_type, font_size)
         self.text_surface = self.font.render(text, True, (255, 255, 255))
         text_width, text_height = self.text_surface.get_size()
         padding = 10
@@ -99,14 +99,15 @@ class ImageButton(GameObject):
 
 
 class ImageLabel(GameObject):
-    def __init__(self, image_path, position=(0, 0), text="", font_type=None, font_size=24, size=None):
+    def __init__(self, image_path, position=(0, 0), text="", font_type="Helvetica", font_size=20, size=None,
+                 font_color=(255, 255, 255)):
         # Load the image and create a font object
         original_image = pygame.image.load(image_path)
         self.position = position
-        self.font = pygame.font.Font(font_type, font_size)
+        self.font = pygame.font.SysFont(font_type, font_size)
 
-        # Render the text onto a surface
-        self.text_surface = self.font.render(text, True, (255, 255, 255))
+        # Render the text onto a surface with the specified font color
+        self.text_surface = self.font.render(text, True, font_color)
         text_width, text_height = self.text_surface.get_size()  # Define text dimensions here
 
         if size:
@@ -147,7 +148,7 @@ class ImageLabel(GameObject):
         pass
 
 
-class TextInput:
+class TextInput(GameObject):
     def __init__(self, position=(0, 0), font_type=None, font_size=24, size=(200, 30),
                  color_inactive=(100, 100, 100), color_active=(0, 0, 0), background_color='white'):
         pygame.font.init()

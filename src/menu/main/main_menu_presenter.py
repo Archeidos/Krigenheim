@@ -33,7 +33,7 @@ class MainMenuController(BaseMenuController):
                                                            position=(
                                                                self.screen.get_width() / 2,
                                                                self.screen.get_height() - self.screen.get_height() + 30),
-                                                           font_size=32,
+                                                           font_size=24,
                                                            size=(175, 50)))
         new_game_button = menu_layout.add_component(
             ImageButton(button_image_path, text="New Game", callback=self._open_new_game, size=(120, 40)),

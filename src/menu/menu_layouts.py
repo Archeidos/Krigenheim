@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+import pygame
 from pygame import Surface
 
 from src.core.game_object import GameObject
@@ -20,7 +21,7 @@ class MenuLayout(GameObject):
         pass
 
     def start(self):
-        if self.background is not None:
+        if self.background is not None and hasattr(self.background, 'start'):
             self.background.start()
         for component in self.components:
             component.start()
@@ -35,7 +36,12 @@ class MenuLayout(GameObject):
 
     def render(self, screen):
         if self.background is not None:
-            self.background.render(screen)
+            if isinstance(self.background, pygame.Color):
+                # Fill the background with a solid color
+                screen.fill(self.background)
+            else:
+                # Assume the background object has its own render method
+                self.background.render(screen)
         for component in self.components:
             component.render(screen)
 
@@ -75,6 +81,57 @@ class StackLayout(MenuLayout):
             self.last_position = component.position
 
         self.components.append(component)
+
+
+
+class GridLayout(MenuLayout):
+    def __init__(self, position, size, columns, row_height, column_width, background=None):
+        """
+        Initialize the GridLayout with fixed number of columns and dimensions for each cell.
+        :param position: Top-left position of the grid layout on the screen.
+        :param size: Tuple (width, height) defining the size of the grid area.
+        :param columns: Number of columns in the grid.
+        :param row_height: Height of each row.
+        :param column_width: Width of each column.
+        :param background: Optional background color or image.
+        """
+        super().__init__(position, background)
+        self.position = position
+        self.size = size
+        self.width, self.height = self.size
+        self.rect = pygame.Rect(position[0], position[1], self.width, self.height)
+        self.columns = columns
+        self.row_height = row_height
+        self.column_width = column_width
+        self.background = background
+        self.components = []
+        self.screen_size = pygame.display.get_surface().get_size()
+
+    def add_component(self, component, row=None, column=None):
+        """
+        Add a component to the GridLayout at the specified row and column.
+        :param component: The component to be added.
+        :param row: The row index where the component should be placed.
+        :param column: The column index where the component should be placed.
+        :return: The added component.
+        """
+        if row is None or column is None:
+            raise ValueError("Row and column indices must be provided")
+        if row * column >= self.columns:
+            raise ValueError("Row or column index exceeds grid dimensions")
+
+        # Calculate the position based on the grid
+        x = self.position[0] + column * self.column_width
+        y = self.position[1] + row * self.row_height
+
+        # Set the component's position
+        component.position = (x, y)
+        self.components.append(component)
+        return component
+
+    def render(self, screen):
+        for component in self.components:
+            component.render(screen)
 
 
 """ This widget is a container for other widgets (menu components). It allows you to position
